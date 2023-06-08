@@ -98,9 +98,9 @@ public class Fish : MonoBehaviour
 
     void GameOver()
     {
+        touchedGround = true;
         sp.sprite = fishDied;
         anim.enabled = false;
-        touchedGround = false;
         transform.rotation = Quaternion.Euler(0, 0, -90);
     }
 
