@@ -8,21 +8,30 @@ public class GameManager : MonoBehaviour
     public static Vector2 bottomLeft;
     public static bool gameOver;
     public GameObject gameOverPanel;
+    public GameObject getReadyImage;
+    public GameObject score;
+    public static int gameScore;
+    public static bool gameStarted;
+
 
     private void Awake()
     {
         bottomLeft = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
+        gameOver = false;
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        gameOver = false;
+        gameStarted = false;
     }
 
     public void GameOver()
     {
         gameOver = true;
+        gameScore = score.GetComponent<Score>().GetScore();
         gameOverPanel.SetActive(true);
+        score.SetActive(false);
     }
 
     public void restartBtn()
@@ -30,6 +39,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void GameHasStarted()
+    {
+        gameStarted = true;
+        getReadyImage.SetActive(false);
+    }
 
 
     void Update()

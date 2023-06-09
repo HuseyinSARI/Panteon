@@ -12,6 +12,7 @@ public class Fish : MonoBehaviour
     int minAgle = -60;
     public Score score;
     public GameManager gameManager;
+    public ObstacleSpawner obstacleSpawner;
     public Sprite fishDied;
     SpriteRenderer sp;
     Animator anim;
@@ -24,6 +25,8 @@ public class Fish : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        _rb.gravityScale = 0;
     }
 
     void Update()
@@ -40,8 +43,20 @@ public class Fish : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && GameManager.gameOver == false)
         {
-            _rb.velocity = Vector2.zero;
-            _rb.velocity = new Vector2(_rb.velocity.x, speed);
+            if (GameManager.gameStarted == false)
+            {
+                _rb.gravityScale = 5f;
+                _rb.velocity = Vector2.zero;
+                _rb.velocity = new Vector2(_rb.velocity.x, speed);
+                gameManager.GameHasStarted();
+                obstacleSpawner.InstantiateObstacle();
+            }
+            else
+            {
+                _rb.velocity = Vector2.zero;
+                _rb.velocity = new Vector2(_rb.velocity.x, speed);
+            }
+
         }
     }
 
@@ -79,7 +94,7 @@ public class Fish : MonoBehaviour
         }
         else if (collision.CompareTag("Column"))
         {
-            //gameover
+            gameManager.GameOver();
         }
 
     }
