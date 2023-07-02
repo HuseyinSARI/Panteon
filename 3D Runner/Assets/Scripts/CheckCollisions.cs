@@ -19,6 +19,14 @@ public class CheckCollisions : MonoBehaviour
     public void AddCoin()
     {
         score++;
-        CoinText.text = "Score: "+ score.ToString();
+        CoinText.text = "Score: " + score.ToString();
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Caprti");
+        }
     }
 }
