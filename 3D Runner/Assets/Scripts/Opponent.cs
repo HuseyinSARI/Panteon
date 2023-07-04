@@ -25,6 +25,24 @@ public class Opponent : MonoBehaviour
             transform.position = OpponentStartPos;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SpeedBoost"))
+        {
+            OpponentAgent.speed = OpponentAgent.speed + 3f;
+            speedBoosterIcon.SetActive(true);
+            StartCoroutine(SlowAfterAWhileCoroutine());
+        }else if (other.CompareTag("Coin"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
+    private IEnumerator SlowAfterAWhileCoroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+        OpponentAgent.speed = OpponentAgent.speed - 3f;
+        speedBoosterIcon.SetActive(false);
+    }
     // Update is called once per frame
     void Update()
     {
